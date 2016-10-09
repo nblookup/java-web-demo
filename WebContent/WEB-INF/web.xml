@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0"
+         metadata-complete="true">
+
+    <display-name>Tomcat Documentation</display-name>
+    <description>
+        Tomcat Documentation.
+    </description>
+
+    <!--配置当前web应用的初始化参数，这是全局的，每个servlet都能访问到-->
+    <context-param>
+        <param-name>driver</param-name>
+        <param-value>org.mariadb.jdbc.Driver</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>jdbcUrl</param-name>
+        <param-value>jdbc:mariadb://localhost:3306/test</param-value>
+    </context-param>
+
+    <!--配置和映射servlet-->
+    <servlet>
+        <!--servlet注册的名字-->
+        <servlet-name>HelloServlet</servlet-name>
+        <!--servlet的全类名-->
+        <servlet-class>org.sonyue.web.servlet.HelloServlet</servlet-class>
+        <!--servlet创建的时机，值越小优先级越高，0代表最高优先级-->
+        <!--<load-on-startup>0</load-on-startup>-->
+
+        <!--配置某个servlet的初始化参数-->
+        <init-param>
+            <param-name>user</param-name>
+            <param-value>root</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>password</param-name>
+            <param-value>123456</param-value>
+        </init-param>
+
+    </servlet>
+    <servlet-mapping>
+        <!--??????servlet???servlet-name??????????-->
+        <servlet-name>HelloServlet</servlet-name>
+        <!--??????????/????web???????????????1?*.??? 2?/xxx/*-->
+        <url-pattern>/servlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>HelloServlet2</servlet-name>
+        <servlet-class>org.sonyue.web.servlet.HelloServlet2</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HelloServlet2</servlet-name>
+        <url-pattern>/servlet2</url-pattern>
+    </servlet-mapping>
+
+</web-app>
