@@ -6,9 +6,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -97,6 +100,56 @@ public class HelloServlet implements Servlet {
     @Override
     public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
         System.out.println("service...");
+        String id = servletRequest.getParameter("check");
+        System.out.println("check: " + id);
+
+        System.out.println("------------华丽的分割线------------");
+
+        Map<String, String[]> parameterMap = servletRequest.getParameterMap();
+        for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+            System.out.println(entry.getKey() + ": " + Arrays.asList(entry.getValue()));
+        }
+
+        System.out.println("------------华丽的分割线------------");
+
+        Enumeration<String> parameterNames = servletRequest.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+            String name = parameterNames.nextElement();
+            System.out.println(name + ": " + Arrays.toString(servletRequest.getParameterValues(name)));
+        }
+
+        System.out.println("------------华丽的分割线------------");
+
+        Enumeration<String> attributeNames = servletRequest.getAttributeNames();
+        while (attributeNames.hasMoreElements()) {
+            String name = parameterNames.nextElement();
+            System.out.println(name + ": " + servletRequest.getAttribute(name));
+        }
+
+        System.out.println("------------华丽的分割线------------");
+
+        System.out.println("server name: " + servletRequest.getServerName());
+        System.out.println("local name: " + servletRequest.getLocalName());
+        System.out.println("local addr: " + servletRequest.getLocalAddr());
+        System.out.println("remote addr: " + servletRequest.getRemoteAddr());
+        System.out.println("local: " + servletRequest.getLocale());
+        System.out.println("protocol: " + servletRequest.getProtocol());
+
+        System.out.println("------------华丽的分割线------------");
+
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        String requestURI = httpServletRequest.getRequestURI();
+        System.out.println("requestURI: " + requestURI);
+
+        String method = httpServletRequest.getMethod();
+        System.out.println("method: " + method);
+
+        String queryString = httpServletRequest.getQueryString();
+        System.out.println("queryString: " + queryString);
+
+        String servletPath = httpServletRequest.getServletPath();
+        System.out.println("servletPath: " + servletPath);
+
     }
 
     @Override
